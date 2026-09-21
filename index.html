@@ -928,6 +928,59 @@
   .footer-bottom p { font-size: 13px; color: var(--muted); }
 
   .footer-bottom a { color: var(--rust); text-decoration: none; }
+  /* AUDIT FORM */
+  .audit-grid {
+    max-width: 1080px;
+    margin: 48px auto 0;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 32px;
+    text-align: left;
+  }
+  .audit-proof {
+    border-top: 1px solid var(--border);
+    padding-top: 22px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .audit-proof strong { color: var(--text); }
+  .audit-form {
+    background: var(--bright);
+    color: var(--dark);
+    padding: 28px;
+    border-radius: 3px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.22);
+  }
+  .audit-form h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .audit-form > p { color: #625e56; font-size: 13px; margin-bottom: 20px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field.full { grid-column: 1 / -1; }
+  .form-field label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #625e56; }
+  .form-field input, .form-field select, .form-field textarea {
+    width: 100%;
+    border: 1px solid #c8c1b5;
+    background: #fffdf8;
+    color: var(--dark);
+    border-radius: 2px;
+    padding: 12px 13px;
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .form-field textarea { min-height: 92px; resize: vertical; }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--rust); box-shadow: 0 0 0 3px rgba(196,98,45,.13); }
+  .audit-submit { width: 100%; justify-content: center; margin-top: 18px; }
+  .form-note { color: #625e56 !important; font-size: 12px !important; margin: 12px 0 0 !important; line-height: 1.5; }
+  .form-status { display: none; margin-top: 14px; padding: 11px 12px; background: #e6f4ec; color: #236440; font-size: 13px; line-height: 1.5; }
+  .form-status.visible { display: block; }
 
   /* ANIMATIONS */
   @keyframes fadeUp {
@@ -957,12 +1010,16 @@
     .hero-stats { flex-wrap: wrap; gap: 32px; }
     .nav-links { display: none; }
     .footer-top { flex-direction: column; }
+    .audit-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 600px) {
     .hero h1 { font-size: 54px; }
     .process-track { grid-template-columns: 1fr; }
     .who-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-field.full { grid-column: auto; }
+    .audit-form { padding: 22px; }
   }
 </style>
 </head>
@@ -1350,9 +1407,56 @@
   <div class="section-label" style="justify-content:center">Free Audit</div>
   <h2>STOP LOSING JOBS<br>TO SOMEONE ON<br><span style="color:var(--rust)">PAGE ONE.</span></h2>
   <p>Get your free local SEO audit. No sales pressure. Just a clear, honest look at what's holding your business back — and how to fix it.</p>
-  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-    <a href="mailto:hello@rankjuice.co" class="btn-primary">Claim Your Free Audit →</a>
-    <a href="tel:+6421000000" class="btn-ghost">📞 Call Us</a>
+  <div class="audit-grid">
+    <div class="audit-proof">
+      <p><strong>What you'll get:</strong></p>
+      <p>Google Business Profile health check, Map Pack position vs. your top competitors, website speed and conversion gaps, citation consistency, and a prioritised keyword opportunity report.</p>
+      <p style="margin-top:20px"><strong>No long sales pitch.</strong> We send the findings first, then you decide whether a conversation makes sense.</p>
+    </div>
+    <form class="audit-form" id="auditForm">
+      <h3>Tell us where to send the audit</h3>
+      <p>Two minutes now. A much clearer view of what's costing you calls.</p>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="auditName">Your name *</label>
+          <input id="auditName" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="form-field">
+          <label for="auditBusiness">Business name *</label>
+          <input id="auditBusiness" name="business" type="text" autocomplete="organization" required>
+        </div>
+        <div class="form-field">
+          <label for="auditEmail">Email *</label>
+          <input id="auditEmail" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="form-field">
+          <label for="auditPhone">Phone</label>
+          <input id="auditPhone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div class="form-field">
+          <label for="auditSector">Business type *</label>
+          <select id="auditSector" name="sector" required>
+            <option value="" selected disabled>Select one</option>
+            <option>Trade business</option>
+            <option>Auto dealership</option>
+            <option>Auto workshop</option>
+            <option>Construction &amp; building</option>
+            <option>Other local business</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="auditWebsite">Website or Google profile</label>
+          <input id="auditWebsite" name="website" type="url" placeholder="https://">
+        </div>
+        <div class="form-field full">
+          <label for="auditMessage">What's the main goal?</label>
+          <textarea id="auditMessage" name="message" placeholder="More calls, a better Map Pack position, specific services…"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary audit-submit">Request My Free Audit →</button>
+      <p class="form-note">Your email app will open with the audit request pre-filled. We never sell your details.</p>
+      <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+    </form>
   </div>
   <p style="margin-top:28px;font-size:13px;color:var(--muted)">Usually responds within 2 business hours · No contracts · 100% NZ-based</p>
 </section>
@@ -1388,18 +1492,18 @@
       <div class="footer-col">
         <h4>Sectors</h4>
         <ul>
-          <li><a href="#">Plumbing SEO</a></li>
-          <li><a href="#">Electrical SEO</a></li>
-          <li><a href="#">HVAC SEO</a></li>
-          <li><a href="#">Auto Dealership SEO</a></li>
-          <li><a href="#">Workshop SEO</a></li>
+          <li><a href="#who">Plumbing SEO</a></li>
+          <li><a href="#who">Electrical SEO</a></li>
+          <li><a href="#who">HVAC SEO</a></li>
+          <li><a href="#who">Auto Dealership SEO</a></li>
+          <li><a href="#who">Workshop SEO</a></li>
         </ul>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
     <p>© 2026 RankJuice. All rights reserved. Proudly NZ-owned.</p>
-    <p><a href="#">Privacy Policy</a> · <a href="#">Terms</a></p>
+    <p><a href="mailto:hello@rankjuice.co?subject=Privacy%20policy%20request">Privacy policy</a> · <a href="mailto:hello@rankjuice.co?subject=Terms%20request">Terms</a></p>
   </div>
 </footer>
 
@@ -1479,6 +1583,29 @@
 
   ['jobVal','leads','close'].forEach(id => {
     document.getElementById(id).addEventListener('input', updateCalc);
+  });
+
+  // AUDIT REQUEST
+  document.getElementById('auditForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const business = form.get('business');
+    const subject = `Free SEO audit request — ${business}`;
+    const body = [
+      `Name: ${form.get('name')}`,
+      `Business: ${business}`,
+      `Email: ${form.get('email')}`,
+      `Phone: ${form.get('phone') || 'Not provided'}`,
+      `Business type: ${form.get('sector')}`,
+      `Website / Google profile: ${form.get('website') || 'Not provided'}`,
+      '',
+      `Main goal: ${form.get('message') || 'Not provided'}`
+    ].join('\n');
+    const mailto = `mailto:hello@rankjuice.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const status = document.getElementById('formStatus');
+    status.innerHTML = `Your request is ready. <a href="${mailto}">Open your email app to send it →</a>`;
+    status.classList.add('visible');
+    status.querySelector('a').focus();
   });
 
   // FAQ
